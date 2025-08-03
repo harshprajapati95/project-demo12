@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduHub - B.Sc. Computer Science Portal</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span> CS-EduHub</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#semesters" class="nav-link">Semesters</a>
+                <a href="#resources" class="nav-link">Resources</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">contact</a>
+                <div id="admin-nav-section" style="display: none;">
+                    <a href="#" class="nav-link admin-link" onclick="adminLogout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+                <div id="guest-nav-section" style="display: flex;">
+                    <a href="admin-login.html" class="nav-link admin-login-link">
+                        <i class="fas fa-user-shield"></i> Admin Login
+                    </a>
+                </div>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to CS EduHub</h1>
+            <p>Your comprehensive educational portal for B.Sc. Computer Science. Access notes, assignments, and resources organized by semester.</p>
+            <div class="hero-buttons">
+                <button class="cta-button primary" onclick="scrollToSection('semesters')">
+                    Choose Your Semester <i class="fas fa-chevron-down"></i>
+                </button>
+                <button class="cta-button secondary" onclick="scrollToSection('about')">
+                    Learn More
+                </button>
+            </div>
+        </div>
+        
+        <div class="hero-features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <h3>Organized Content</h3>
+                <p>Semester-wise organization of all educational materials</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Mobile Friendly</h3>
+                <p>Access your study materials from any device, anywhere</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Secure Access</h3>
+                <p>Admin-controlled content management with secure authentication</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Semester Selection Section -->
+    <section id="semesters" class="semesters-section">
+        <div class="container">
+            <h2 class="section-title">B.Sc. Computer Science - Choose Your Semester</h2>
+            <p class="course-selected">Bachelor of Science in Computer Science</p>
+            <div class="semesters-grid">
+                <div class="semester-card" onclick="selectSemester(1)">
+                    <div class="semester-number">1</div>
+                    <h3>First Semester</h3>
+                    <p>Programming Fundamentals, Computer Basics</p>
+                </div>
+                <div class="semester-card" onclick="selectSemester(2)">
+                    <div class="semester-number">2</div>
+                    <h3>Second Semester</h3>
+                    <p>OOP, Data Structures, Mathematics</p>
+                </div>
+                <div class="semester-card" onclick="selectSemester(3)">
+                    <div class="semester-number">3</div>
+                    <h3>Third Semester</h3>
+                    <p>DBMS, Networks, Algorithms</p>
+                </div>
+                <div class="semester-card" onclick="selectSemester(4)">
+                    <div class="semester-number">4</div>
+                    <h3>Fourth Semester</h3>
+                    <p>Web Development, Software Engineering</p>
+                </div>
+                <div class="semester-card" onclick="selectSemester(5)">
+                    <div class="semester-number">5</div>
+                    <h3>Fifth Semester</h3>
+                    <p>Advanced Topics, AI Basics</p>
+                </div>
+                <div class="semester-card" onclick="selectSemester(6)">
+                    <div class="semester-number">6</div>
+                    <h3>Sixth Semester</h3>
+                    <p>Final Projects, Specialization</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subjects Section -->
+    <section id="subjects-list" class="subjects-section" style="display: none;">
+        <div class="container">
+            <div class="back-button" onclick="goBackToSemesters()">
+                <i class="fas fa-arrow-left"></i> Back to Semesters
+            </div>
+            <h2 class="section-title">Choose Your Subject</h2>
+            <p class="selection-info">
+                B.Sc. Computer Science - <span id="selected-semester-info"></span>
+            </p>
+            <div class="subjects-grid" id="subjects-container">
+                <!-- Subjects will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="resources-section">
+        <div class="container">
+            <h2 class="section-title">Quick Access Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Assignments</h3>
+                    <p>Current and past assignments</p>
+                    <button class="resource-btn" onclick="showAllAssignments()">View Assignments</button>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>Previous Year Papers</h3>
+                    <p>Practice with past exam papers</p>
+                    <button class="resource-btn" onclick="showAllPYQs()">View PYQs</button>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    <h3>Syllabus</h3>
+                    <p>Complete course syllabus</p>
+                    <button class="resource-btn" onclick="showAllSyllabus()">View Syllabus</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">About CS-EduHub</h2>
+            <div class="about-content">
+                <p>CS-EduHub is a comprehensive educational portal designed specifically for B.Sc. Computer Science students. Access all your academic resources including programming notes, assignments, previous year questions, and syllabus - everything organized by semester for easy navigation.</p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Mobile Responsive</h3>
+                        <p>Access your study materials from any device, anywhere, anytime</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Easy Search</h3>
+                        <p>Find specific content quickly with our intuitive search system</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h3>Download Resources</h3>
+                        <p>Download study materials for offline access and reference</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>24/7 Access</h3>
+                        <p>Round-the-clock availability to support you learning schedule</p>
+                    </div>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-number blue">6</div>
+                        <div class="stat-label">Semesters</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number green">30+</div>
+                        <div class="stat-label">Subjects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number purple">500+</div>
+                        <div class="stat-label">Resources</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number orange">24/7</div>
+                        <div class="stat-label">Availability</div>
+                    </div>
+                </div>
+                
+                <!-- Questions or Suggestions Section -->
+                <div class="contact-suggestion-box">
+                    <h2>Questions or Suggestions?</h2>
+                    <p>
+                        We're constantly working to improve CS-EduHub. If you have any questions, feedback, or suggestions for new features, we'd love to hear from you.
+                    </p>
+                    <a href="mailto:officaleduhub@gmail.com" class="contact-suggestion-btn">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subject Modal -->
+    <div id="subject-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modal-subject-title">Subject Name</h2>
+            <div class="modal-tabs">
+                <button class="tab-button active" onclick="showTab('teacher-notes')">Teacher Notes</button>
+                <button class="tab-button" onclick="showTab('student-notes')">Student Notes</button>
+                <button class="tab-button" onclick="showTab('resources')">Resources</button>
+                <button class="tab-button" onclick="showTab('assignments')">Assignments</button>
+                <button class="tab-button" onclick="showTab('pyqs')">PYQs</button>
+                <button class="tab-button" onclick="showTab('syllabus')">Syllabus</button>
+            </div>
+            <div id="modal-content-area">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="upload-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUploadModal()">&times;</span>
+            <h2><i class="fas fa-upload"></i> Upload Content</h2>
+            
+            <!-- Storage Status Indicator -->
+            <div id="storage-status" class="storage-status">
+                <i class="fas fa-cloud" id="storage-icon"></i>
+                <span id="storage-text">Checking storage configuration...</span>
+            </div>
+            
+            <form id="upload-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="upload-semester">
+                        <i class="fas fa-calendar"></i> Semester
+                    </label>
+                    <select id="upload-semester" name="semester" required>
+                        <option value="">Select Semester</option>
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="upload-subject">
+                        <i class="fas fa-book"></i> Subject
+                    </label>
+                    <input type="text" id="upload-subject" name="subject" required 
+                           placeholder="e.g., Programming Fundamentals">
+                </div>
+                
+                <div class="form-group">
+                    <label for="upload-category">
+                        <i class="fas fa-tag"></i> Category
+                    </label>
+                    <select id="upload-category" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="teacher-notes">Teacher Notes</option>
+                        <option value="student-notes">Student Notes</option>
+                        <option value="assignments">Assignments</option>
+                        <option value="pyqs">Previous Year Questions</option>
+                        <option value="syllabus">Syllabus</option>
+                        <option value="resources">Resources</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="upload-title">
+                        <i class="fas fa-heading"></i> Title
+                    </label>
+                    <input type="text" id="upload-title" name="title" required 
+                           placeholder="e.g., Chapter 1 - Introduction">
+                </div>
+                
+                <div class="form-group">
+                    <label for="upload-description">
+                        <i class="fas fa-align-left"></i> Description (Optional)
+                    </label>
+                    <textarea id="upload-description" name="description" rows="3" 
+                              placeholder="Brief description of the content"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="upload-file">
+                        <i class="fas fa-file"></i> File
+                    </label>
+                    <input type="file" id="upload-file" name="file" required 
+                           accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.jpg,.jpeg,.png">
+                    <small>Supported formats: PDF, DOC, DOCX, PPT, PPTX, TXT, JPG, PNG (Max: 100MB)</small>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" onclick="closeUploadModal()" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-upload">
+                        <i class="fas fa-upload"></i> Upload
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>CS-EduHub</span>
+                    </div>
+                    <p class="footer-description">
+                        Your comprehensive educational portal for B.Sc. Computer Science. Making education accessible and organized for students everywhere.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="mailto:officaleduhub@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#semesters">Semesters</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Admin</h3>
+                <ul class="footer-links">
+                    <li><a href="admin-login.html">Admin Login</a></li>
+                    <li><a href="admin-setup.html">Admin Setup</a></li>
+                    <li><a href="API_DOCUMENTATION.md" target="_blank">Documentation</a></li>
+                    <li><a href="#contact">Support</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2025 CS-EduHub Portal. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+<script src="js/script.js"></script>
+</body>
+</html>
